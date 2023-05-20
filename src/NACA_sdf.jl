@@ -27,12 +27,12 @@ function parametric_sdf(curve)
     align(X,t) = vector(X,t)'*dcurve(t)
     dalign(X,t) = vector(X,t)'*ddcurve(t)-sum(abs2,dcurve(t))
     distance(X,t) = (v=vector(X,t); copysign(√(v'*v),norm(t)'*v))
-    function(X,tol=0.01,t₀=(0.01,0.5,0.99),itmx=5)
+    function(X;tol=0.01,t₀=(0.01,0.5,0.99),itmx=5)
         # distance to ends
         dmin = distance(X,0.)
         d = distance(X,1.)
         abs(d)<abs(dmin) && (dmin=d)
-        # check for smaller distnace along curve
+        # check for smaller distance along curve
         for t in t₀
             for _ in 1:itmx # Newton root finding
                 dt = align(X,t)/dalign(X,t)
